@@ -23,14 +23,35 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #4EC0CA;
+            background-color: #007bff;
         }
 
         .center-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+
+        }
+
+        #game {
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            position: relative;
+        }
+
+        #game-container {
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
         }
 
         .board {
@@ -54,9 +75,12 @@
         }
 
         #footer {
-            position: fixed; /* Le positionnement fixe le maintiendra en bas de l'écran */
-            bottom: 0; /* Le placer tout en bas de la fenêtre */
-            width: 100%; /* Occuper toute la largeur de l'écran */
+            position: fixed;
+            /* Le positionnement fixe le maintiendra en bas de l'écran */
+            bottom: 0;
+            /* Le placer tout en bas de la fenêtre */
+            width: 100%;
+            /* Occuper toute la largeur de l'écran */
         }
     </style>
     <script>
@@ -112,16 +136,82 @@
             setTimeout(computerPlay, 1000);
         }
 
+        // Fonction pour vérifier si le joueur a deux 'X' alignés
+        function checkTwoX(player) {
+            const cells = document.querySelectorAll('.cell');
+            const winningCombos = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            return winningCombos.some(combo => {
+                const line = combo.map(index => cells[index].textContent);
+                const countX = line.filter(cell => cell === 'X').length;
+                return countX === 2 && line.includes('');
+            });
+        }
+
         // Fonction pour laisser l'ordinateur jouer
         function computerPlay() {
             const cells = document.querySelectorAll('.cell');
             let availableCells = [];
+
+            // Parcourir les cellules disponibles et ajouter à la liste
             cells.forEach(cell => {
                 if (cell.textContent === '') {
                     availableCells.push(cell);
                 }
             });
-            // Choisir une cellule aléatoire parmi les cellules disponibles
+
+            // Chercher une possibilité de gagner pour l'ordinateur
+            for (let i = 0; i < availableCells.length; i++) {
+                const cell = availableCells[i];
+                cell.textContent = 'O'; // Essayer de placer un "O" dans cette cellule
+                if (checkWinner('O')) {
+                    alert('Player O wins!');
+                    initializeGame(); // Réinitialiser le jeu après la victoire
+                    return;
+                }
+                cell.textContent = ''; // Réinitialiser la cellule après le test
+            }
+
+            // Chercher une possibilité de blocage pour l'ordinateur
+            for (let i = 0; i < availableCells.length; i++) {
+                const cell = availableCells[i];
+                if (cell.textContent === '') {
+                    cell.textContent = 'X'; // Essayer de placer un "X" dans cette cellule
+                    if (checkWinner('X')) {
+                        cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
+                        // Vérifier s'il y a un gagnant après le blocage
+                        if (checkWinner('O')) {
+                            alert('Player O wins!');
+                            initializeGame(); // Réinitialiser le jeu après la victoire
+                            return;
+                        }
+                        cell.textContent = ''; // Réinitialiser la cellule après le test
+                    } else {
+                        cell.textContent = ''; // Réinitialiser la cellule si pas de gagnant
+                        // Vérifier si le joueur a deux "X" alignés
+                        if (checkTwoX('X')) {
+                            cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
+                            // Vérifier s'il y a un gagnant après le blocage
+                            if (checkWinner('O')) {
+                                alert('Player O wins!');
+                                initializeGame(); // Réinitialiser le jeu après la victoire
+                                return;
+                            }
+                            cell.textContent = ''; // Réinitialiser la cellule après le test
+                        }
+                    }
+                }
+            }
+
+            // Si aucune possibilité de gagner ou de bloquer, choisir une cellule au hasard
             const randomIndex = Math.floor(Math.random() * availableCells.length);
             availableCells[randomIndex].textContent = 'O'; // Marquer la cellule avec 'O'
 
@@ -174,19 +264,23 @@
 
 <body>
     <header id="header"></header>
-    <div class="center-container">
-        <div class="board">
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
+    <div id="game-container" style="margin-left: auto; margin-right: auto;">
+        <div id="game" class="center-container">
+            <div class="board">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
         </div>
     </div>
+
+
     <!-- Ajoutez ici le code pour le footer -->
     <div id="footer"></div>
     <!-- Ajoutez ici les liens vers les scripts Bootstrap et Core theme JS -->
