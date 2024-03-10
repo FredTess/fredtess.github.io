@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +12,15 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Police Google Fonts -->
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    
+
     <!-- Script jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-
-
         #game {
-            width: 500px;
+            width: 400px;
             height: 400px;
             background-color: #fff;
             border-radius: 8px;
@@ -49,6 +48,9 @@
             transform-style: preserve-3d;
             perspective: 1000px;
         }
+        .card:hover{
+            transform: rotateY(30deg);
+        }
 
         .card .front,
         .card .back {
@@ -60,7 +62,8 @@
 
         .card .back {
             transform: rotateY(180deg);
-            font-size: 36px; /* Augmenter la taille de la lettre */
+            font-size: 36px;
+            /* Augmenter la taille de la lettre */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,8 +87,9 @@
             background-color: rgba(0, 255, 0, 0.3);
             border-radius: 8px;
         }
+
         #game-container {
-            
+
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -93,7 +97,18 @@
         }
 
         #restart-button {
-            width: 100%;
+            width: 400px;
+            margin-top: 20px;
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #solve-button {
+            width: 400px;
             margin-top: 20px;
             background-color: blue;
             color: white;
@@ -107,38 +122,61 @@
         #restart-button:hover {
             background-color: #4569a0;
         }
+
+        .game-success {
+            animation: bounce 0.5s ease infinite alternate;
+            
+        }
+        #footer {
+            position: fixed; /* Le positionnement fixe le maintiendra en bas de l'écran */
+            bottom: 0; /* Le placer tout en bas de la fenêtre */
+            width: 100%; /* Occuper toute la largeur de l'écran */
+            
+}
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
     <script>
         $(document).ready(function () {
-        $("#header").load("header.html"); // Chargement du contenu du header
-        
-        $("#footer").load("footer.html", function () {
-          // Fonction de rappel appelée une fois que le contenu du footer est chargé
-          replaceSocialMediaLinks();
-        });
-      });
-      // Fonction pour remplacer les adresses des réseaux sociaux par des icônes
-function replaceSocialMediaLinks() {
-    const facebookIcon = '<a href="https://www.facebook.com/frederic.tessier.58" target="blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>';
-    const youtubeIcon = '<a href="https://www.youtube.com/channel/UC4lRur7lJc5Itl6rE8LKZzg"><i class="fa fab fa-youtube w3-hover-opacity"></i></a>';
-    const linkedinIcon = '<a href="https://www.linkedin.com/in/frederic-tessier-48964a268/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>';
+            $("#header").load("header.html"); // Chargement du contenu du header
 
-    // Remplacer les adresses par les icônes
-    document.getElementById("facebook-icon").innerHTML = facebookIcon;
-    document.getElementById("youtube-icon").innerHTML = youtubeIcon;
-    document.getElementById("linkedin-icon").innerHTML = linkedinIcon;
-}
+            $("#footer").load("footer.html", function () {
+                // Fonction de rappel appelée une fois que le contenu du footer est chargé
+                replaceSocialMediaLinks();
+            });
+        });
+        // Fonction pour remplacer les adresses des réseaux sociaux par des icônes
+        function replaceSocialMediaLinks() {
+            const facebookIcon = '<a href="https://www.facebook.com/frederic.tessier.58" target="blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>';
+            const youtubeIcon = '<a href="https://www.youtube.com/channel/UC4lRur7lJc5Itl6rE8LKZzg"><i class="fa fab fa-youtube w3-hover-opacity"></i></a>';
+            const linkedinIcon = '<a href="https://www.linkedin.com/in/frederic-tessier-48964a268/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>';
+
+            // Remplacer les adresses par les icônes
+            document.getElementById("facebook-icon").innerHTML = facebookIcon;
+            document.getElementById("youtube-icon").innerHTML = youtubeIcon;
+            document.getElementById("linkedin-icon").innerHTML = linkedinIcon;
+        }
     </script>
 </head>
-<body>
-    <header id="header"></header>
-    <div ></div>
 
-  
+<body style="background-color: #007bff;height: 100vh;">
+    <header id="header"></header>
+    <div></div>
+
+
 
     <div id="game-container" style="margin-left: auto; margin-right: auto;">
         <div id="game"></div>
         <button id="restart-button" onclick="restartGame()">Recommencer</button>
+        <button id="solve-button" onclick="solveGame()">Voir</button> <!-- Nouveau bouton -->
     </div>
     <div id="footer"></div>
     <script>
@@ -201,7 +239,9 @@ function replaceSocialMediaLinks() {
                 }
 
                 if (matchedCards.length === cards.length) {
-                    setTimeout(() => alert('Congratulations! You won!'), 500);
+                    const gameBoard = document.getElementById('game');
+                    gameBoard.classList.add('game-success');
+                    setTimeout(() => alert('Congratulations! You won!'), 500);;
                 }
             }
         }
@@ -210,7 +250,26 @@ function replaceSocialMediaLinks() {
             matchedCards = [];
             const gameBoard = document.getElementById('game');
             gameBoard.innerHTML = '';
+            gameBoard.classList.remove('game-success'); // Supprimer la classe d'animation
+
+            const solveButton = document.getElementById('solve-button'); // Sélectionner le bouton "Résoudre"
+            solveButton.style.display = 'block'; // Réafficher le bouton "Résoudre"
+
             initializeGame();
+        }
+        
+        function solveGame() {
+            const solveButton = document.getElementById('solve-button'); // Sélectionner le bouton "Résoudre"
+            solveButton.style.display = 'none'; // Cacher le bouton "Résoudre"
+
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+            card.classList.add('flip');
+            setTimeout(() => {
+                card.classList.remove('flip');
+
+            }, 5000); // Révélation pendant 5 secondes
+        });
         }
 
 

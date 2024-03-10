@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <!-- Liens vers les feuilles de style -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/styles.css" rel="stylesheet" /> <!-- Feuille de style personnalisée -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Police Google Fonts -->
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Script jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Ajoutez ici le CSS du jeu Tic Tac Toe */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #4EC0CA;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            font-size: 36px;
+            text-align: center;
+            line-height: 100px;
+            background-color: white;
+            border: 2px solid black;
+        }
+
+        .cell:hover {
+            cursor: pointer;
+        }
+
+        #footer {
+            position: fixed; /* Le positionnement fixe le maintiendra en bas de l'écran */
+            bottom: 0; /* Le placer tout en bas de la fenêtre */
+            width: 100%; /* Occuper toute la largeur de l'écran */
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#header").load("header.html"); // Chargement du contenu du header
+
+            $("#footer").load("footer.html", function () {
+                // Fonction de rappel appelée une fois que le contenu du footer est chargé
+                replaceSocialMediaLinks();
+            });
+        });
+        // Fonction pour remplacer les adresses des réseaux sociaux par des icônes
+        function replaceSocialMediaLinks() {
+            const facebookIcon = '<a href="https://www.facebook.com/frederic.tessier.58" target="blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>';
+            const youtubeIcon = '<a href="https://www.youtube.com/channel/UC4lRur7lJc5Itl6rE8LKZzg"><i class="fa fab fa-youtube w3-hover-opacity"></i></a>';
+            const linkedinIcon = '<a href="https://www.linkedin.com/in/frederic-tessier-48964a268/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>';
+
+            // Remplacer les adresses par les icônes
+            document.getElementById("facebook-icon").innerHTML = facebookIcon;
+            document.getElementById("youtube-icon").innerHTML = youtubeIcon;
+            document.getElementById("linkedin-icon").innerHTML = linkedinIcon;
+        }
+
+        // Fonction pour initialiser le jeu de Tic Tac Toe
+        function initializeGame() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.addEventListener('click', handleClick);
+            });
+        }
+
+        // Fonction pour gérer le clic sur une cellule
+        function handleClick() {
+            if (this.textContent !== '') return; // Ne rien faire si la cellule est déjà occupée
+
+            this.textContent = 'X'; // Marquer la cellule avec 'X'
+            // Vérifier s'il y a un gagnant après chaque coup
+            if (checkWinner('X')) {
+                alert('Player X wins!');
+                initializeGame(); // Réinitialiser le jeu après la victoire
+                return;
+            }
+
+            // Vérifier s'il y a un match nul
+            if (isDraw()) {
+                alert('It\'s a draw!');
+                initializeGame(); // Réinitialiser le jeu après un match nul
+                return;
+            }
+
+            // Laisser l'ordinateur jouer avec un délai de 1 seconde
+            setTimeout(computerPlay, 1000);
+        }
+
+        // Fonction pour laisser l'ordinateur jouer
+        function computerPlay() {
+            const cells = document.querySelectorAll('.cell');
+            let availableCells = [];
+            cells.forEach(cell => {
+                if (cell.textContent === '') {
+                    availableCells.push(cell);
+                }
+            });
+            // Choisir une cellule aléatoire parmi les cellules disponibles
+            const randomIndex = Math.floor(Math.random() * availableCells.length);
+            availableCells[randomIndex].textContent = 'O'; // Marquer la cellule avec 'O'
+
+            // Vérifier s'il y a un gagnant après le tour de l'ordinateur
+            if (checkWinner('O')) {
+                alert('Player O wins!');
+                initializeGame(); // Réinitialiser le jeu après la victoire
+                return;
+            }
+
+            // Vérifier s'il y a un match nul
+            if (isDraw()) {
+                alert('It\'s a draw!');
+                initializeGame(); // Réinitialiser le jeu après un match nul
+            }
+        }
+
+        // Fonction pour vérifier s'il y a un gagnant
+        function checkWinner(player) {
+            const cells = document.querySelectorAll('.cell');
+            const winningCombos = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            return winningCombos.some(combo => {
+                return combo.every(index => {
+                    return cells[index].textContent === player;
+                });
+            });
+        }
+
+        // Fonction pour vérifier s'il y a un match nul
+        function isDraw() {
+            const cells = document.querySelectorAll('.cell');
+            return [...cells].every(cell => cell.textContent !== '');
+        }
+
+        // Initialiser le jeu au chargement de la page
+        window.onload = function () {
+            initializeGame();
+        };
+    </script>
+</head>
+
+<body>
+    <header id="header"></header>
+    <div class="center-container">
+        <div class="board">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+    </div>
+    <!-- Ajoutez ici le code pour le footer -->
+    <div id="footer"></div>
+    <!-- Ajoutez ici les liens vers les scripts Bootstrap et Core theme JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
