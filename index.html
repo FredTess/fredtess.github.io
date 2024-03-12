@@ -1,85 +1,129 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Frédéric Tessier</title>
-    
-    <!-- Liens vers les feuilles de style -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/styles.css" rel="stylesheet" /> <!-- Feuille de style personnalisée -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Police Google Fonts -->
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    
-    <!-- Script jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Script JavaScript personnalisé -->
-    <script>
-      $(document).ready(function () {
-        $("#header").load("header.html"); // Chargement du contenu du header
-        $("#main").load("home.html"); // Chargement du contenu du header
-        $("#footer").load("footer.html", function () {
-          // Fonction de rappel appelée une fois que le contenu du footer est chargé
-          replaceSocialMediaLinks();
-        });
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frédéric Tessier</title>
+
+  <!-- Liens vers les feuilles de style -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="css/styles.css" rel="stylesheet" /> <!-- Feuille de style personnalisée -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Police Google Fonts -->
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Script jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Script JavaScript personnalisé -->
+  <script>
+
+    $(document).ready(function () {
+      $("#header").load("header.html"); // Chargement du contenu du header
+      $("#main").load("home.html"); // Chargement du contenu du header
+      $("#footer").load("footer.html", function () {
+        // Fonction de rappel appelée une fois que le contenu du footer est chargé
+        replaceSocialMediaLinks();
       });
+    });
 
-// Fonction pour remplacer les adresses des réseaux sociaux par des icônes
-function replaceSocialMediaLinks() {
-    const facebookIcon = '<a href="https://www.facebook.com/frederic.tessier.58" target="blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>';
-    const youtubeIcon = '<a href="https://www.youtube.com/channel/UC4lRur7lJc5Itl6rE8LKZzg"><i class="fa fab fa-youtube w3-hover-opacity"></i></a>';
-    const linkedinIcon = '<a href="https://www.linkedin.com/in/frederic-tessier-48964a268/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>';
+    // Fonction pour remplacer les adresses des réseaux sociaux par des icônes
+    function replaceSocialMediaLinks() {
+      const facebookIcon = '<a href="https://www.facebook.com/frederic.tessier.58" target="blank"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>';
+      const youtubeIcon = '<a href="https://www.youtube.com/channel/UC4lRur7lJc5Itl6rE8LKZzg"><i class="fa fab fa-youtube w3-hover-opacity"></i></a>';
+      const linkedinIcon = '<a href="https://www.linkedin.com/in/frederic-tessier-48964a268/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>';
 
-    // Remplacer les adresses par les icônes
-    document.getElementById("facebook-icon").innerHTML = facebookIcon;
-    document.getElementById("youtube-icon").innerHTML = youtubeIcon;
-    document.getElementById("linkedin-icon").innerHTML = linkedinIcon;
-}
-    </script>
-    
-    <!-- Style CSS en ligne -->
-    <style>
-      html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
-    </style>
-    <style>
-      /* Style personnalisé pour la présentation */
-      .presentation-section {
-          padding: 60px;
-      }
+      // Remplacer les adresses par les icônes
+      document.getElementById("facebook-icon").innerHTML = facebookIcon;
+      document.getElementById("youtube-icon").innerHTML = youtubeIcon;
+      document.getElementById("linkedin-icon").innerHTML = linkedinIcon;
+    }
+  </script>
 
-      .presentation-section p {
-          font-size: 18px;
-          line-height: 1.6;
-          margin-bottom: 20px;
-          font-family: 'Courier New', Courier, monospace;
-      }
-      #footer {
-            position: fixed; /* Le positionnement fixe le maintiendra en bas de l'écran */
-            bottom: 0; /* Le placer tout en bas de la fenêtre */
-            width: 100%; /* Occuper toute la largeur de l'écran */
-            
-}
+  <!-- Style CSS en ligne -->
+  <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Roboto", sans-serif
+    }
+    main:hover{
+      cursor: text;
+    }
   </style>
-  </head>
+  <style>
+    /* Style personnalisé pour la présentation */
+    .presentation-section {
+      padding: 60px;
+    }
+
+    .presentation-section p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #footer {
+      position: fixed;
+      /* Le positionnement fixe le maintiendra en bas de l'écran */
+      bottom: 0;
+      /* Le placer tout en bas de la fenêtre */
+      width: 100%;
+      /* Occuper toute la largeur de l'écran */
+
+    }
+    .navbar {
+      position: relative; /* Position relative pour permettre le positionnement absolu de l'icône */
+    }
+    #human-icon {
+      position: absolute; /* Position absolue pour le positionnement de l'icône */
+      top: 50%; /* Centrage vertical */
+      transform: translateY(-50%); /* Centrage vertical */
+    }
+    #human-icon:hover {
+      color: greenyellow;
+    }
+  </style>
+</head>
 
 <body class="w3-light-grey">
+
+
 
   <div id="header"></div>
 
   <div id="main" class="w3-row-padding"></div>
-<div id="footer"></div>
+  <div id="footer"></div>
 
 
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("mousemove", function(event) {
+      // Récupérez la position horizontale de la souris
+      var mouseX = event.clientX;
 
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+      // Obtenez l'élément de l'icône
+      var icon = document.getElementById("human-icon");
+
+      // Déplacez l'icône en ajustant sa position horizontale
+      icon.style.left = mouseX + "px";
+    });
+  </script>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
 </body>
+
 </html>
