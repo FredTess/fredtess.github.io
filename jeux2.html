@@ -137,97 +137,97 @@
         }
 
         // Fonction pour vérifier si le joueur a deux 'X' alignés
-        function checkTwoX(player) {
-            const cells = document.querySelectorAll('.cell');
-            const winningCombos = [
-                [0, 1, 2],
-                [3, 4, 5],
-                [6, 7, 8],
-                [0, 3, 6],
-                [1, 4, 7],
-                [2, 5, 8],
-                [0, 4, 8],
-                [2, 4, 6]
-            ];
-            return winningCombos.some(combo => {
-                const line = combo.map(index => cells[index].textContent);
-                const countX = line.filter(cell => cell === 'X').length;
-                return countX === 2 && line.includes('');
-            });
+function checkTwoX(player) {
+    const cells = document.querySelectorAll('.cell');
+    const winningCombos = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+    return winningCombos.some(combo => {
+        const line = combo.map(index => cells[index].textContent);
+        const countX = line.filter(cell => cell === 'X').length;
+        return countX === 2 && line.includes('');
+    });
+}
+
+// Fonction pour laisser l'ordinateur jouer
+function computerPlay() {
+    const cells = document.querySelectorAll('.cell');
+    let availableCells = [];
+
+    // Parcourir les cellules disponibles et ajouter à la liste
+    cells.forEach(cell => {
+        if (cell.textContent === '') {
+            availableCells.push(cell);
         }
+    });
 
-        // Fonction pour laisser l'ordinateur jouer
-        function computerPlay() {
-            const cells = document.querySelectorAll('.cell');
-            let availableCells = [];
+    // Chercher une possibilité de gagner pour l'ordinateur
+    for (let i = 0; i < availableCells.length; i++) {
+        const cell = availableCells[i];
+        cell.textContent = 'O'; // Essayer de placer un "O" dans cette cellule
+        if (checkWinner('O')) {
+            alert('Player O wins!');
+            initializeGame(); // Réinitialiser le jeu après la victoire
+            return;
+        }
+        cell.textContent = ''; // Réinitialiser la cellule après le test
+    }
 
-            // Parcourir les cellules disponibles et ajouter à la liste
-            cells.forEach(cell => {
-                if (cell.textContent === '') {
-                    availableCells.push(cell);
-                }
-            });
-
-            // Chercher une possibilité de gagner pour l'ordinateur
-            for (let i = 0; i < availableCells.length; i++) {
-                const cell = availableCells[i];
-                cell.textContent = 'O'; // Essayer de placer un "O" dans cette cellule
+    // Chercher une possibilité de blocage pour l'ordinateur
+    for (let i = 0; i < availableCells.length; i++) {
+        const cell = availableCells[i];
+        if (cell.textContent === '') {
+            cell.textContent = 'X'; // Essayer de placer un "X" dans cette cellule
+            if (checkWinner('X')) {
+                cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
+                // Vérifier s'il y a un gagnant après le blocage
                 if (checkWinner('O')) {
                     alert('Player O wins!');
                     initializeGame(); // Réinitialiser le jeu après la victoire
                     return;
                 }
                 cell.textContent = ''; // Réinitialiser la cellule après le test
-            }
-
-            // Chercher une possibilité de blocage pour l'ordinateur
-            for (let i = 0; i < availableCells.length; i++) {
-                const cell = availableCells[i];
-                if (cell.textContent === '') {
-                    cell.textContent = 'X'; // Essayer de placer un "X" dans cette cellule
-                    if (checkWinner('X')) {
-                        cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
-                        // Vérifier s'il y a un gagnant après le blocage
-                        if (checkWinner('O')) {
-                            alert('Player O wins!');
-                            initializeGame(); // Réinitialiser le jeu après la victoire
-                            return;
-                        }
-                        cell.textContent = ''; // Réinitialiser la cellule après le test
-                    } else {
-                        cell.textContent = ''; // Réinitialiser la cellule si pas de gagnant
-                        // Vérifier si le joueur a deux "X" alignés
-                        if (checkTwoX('X')) {
-                            cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
-                            // Vérifier s'il y a un gagnant après le blocage
-                            if (checkWinner('O')) {
-                                alert('Player O wins!');
-                                initializeGame(); // Réinitialiser le jeu après la victoire
-                                return;
-                            }
-                            cell.textContent = ''; // Réinitialiser la cellule après le test
-                        }
+            } else {
+                cell.textContent = ''; // Réinitialiser la cellule si pas de gagnant
+                // Vérifier si le joueur a deux "X" alignés
+                if (checkTwoX('X')) {
+                    cell.textContent = 'O'; // Placer un "O" pour bloquer le joueur
+                    // Vérifier s'il y a un gagnant après le blocage
+                    if (checkWinner('O')) {
+                        alert('Player O wins!');
+                        initializeGame(); // Réinitialiser le jeu après la victoire
+                        return;
                     }
+                    cell.textContent = ''; // Réinitialiser la cellule après le test
                 }
             }
-
-            // Si aucune possibilité de gagner ou de bloquer, choisir une cellule au hasard
-            const randomIndex = Math.floor(Math.random() * availableCells.length);
-            availableCells[randomIndex].textContent = 'O'; // Marquer la cellule avec 'O'
-
-            // Vérifier s'il y a un gagnant après le tour de l'ordinateur
-            if (checkWinner('O')) {
-                alert('Player O wins!');
-                initializeGame(); // Réinitialiser le jeu après la victoire
-                return;
-            }
-
-            // Vérifier s'il y a un match nul
-            if (isDraw()) {
-                alert('It\'s a draw!');
-                initializeGame(); // Réinitialiser le jeu après un match nul
-            }
         }
+    }
+
+    // Si aucune possibilité de gagner ou de bloquer, choisir une cellule au hasard
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    availableCells[randomIndex].textContent = 'O'; // Marquer la cellule avec 'O'
+
+    // Vérifier s'il y a un gagnant après le tour de l'ordinateur
+    if (checkWinner('O')) {
+        alert('Player O wins!');
+        initializeGame(); // Réinitialiser le jeu après la victoire
+        return;
+    }
+
+    // Vérifier s'il y a un match nul
+    if (isDraw()) {
+        alert('It\'s a draw!');
+        initializeGame(); // Réinitialiser le jeu après un match nul
+    }
+}
 
         // Fonction pour vérifier s'il y a un gagnant
         function checkWinner(player) {
