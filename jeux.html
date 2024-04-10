@@ -48,7 +48,8 @@
             transform-style: preserve-3d;
             perspective: 1000px;
         }
-        .card:hover{
+
+        .card:hover {
             transform: rotateY(30deg);
         }
 
@@ -107,6 +108,7 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         #solve-button {
             width: 400px;
             margin-top: 20px;
@@ -122,20 +124,25 @@
         #restart-button:hover {
             background-color: #7a7a7a;
         }
+
         #solve-button:hover {
             background-color: #7a7a7a;
         }
 
         .game-success {
             animation: bounce 0.5s ease infinite alternate;
-            
+
         }
+
         #footer {
-            position: fixed; /* Le positionnement fixe le maintiendra en bas de l'écran */
-            bottom: 0; /* Le placer tout en bas de la fenêtre */
-            width: 100%; /* Occuper toute la largeur de l'écran */
-            
-}
+            position: fixed;
+            /* Le positionnement fixe le maintiendra en bas de l'écran */
+            bottom: 0;
+            /* Le placer tout en bas de la fenêtre */
+            width: 100%;
+            /* Occuper toute la largeur de l'écran */
+
+        }
 
         @keyframes bounce {
             0% {
@@ -146,13 +153,15 @@
                 transform: translateY(-10px);
             }
         }
-        .navbar {
-      position: relative; /* Position relative pour permettre le positionnement absolu de l'icône */
-    }
 
-    #human-icon:hover {
-      color: greenyellow;
-    }
+        .navbar {
+            position: relative;
+            /* Position relative pour permettre le positionnement absolu de l'icône */
+        }
+
+        #human-icon:hover {
+            color: greenyellow;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -267,19 +276,19 @@
 
             initializeGame();
         }
-        
+
         function solveGame() {
             const solveButton = document.getElementById('solve-button'); // Sélectionner le bouton "Résoudre"
             solveButton.style.display = 'none'; // Cacher le bouton "Résoudre"
 
             const allCards = document.querySelectorAll('.card');
             allCards.forEach(card => {
-            card.classList.add('flip');
-            setTimeout(() => {
-                card.classList.remove('flip');
+                card.classList.add('flip');
+                setTimeout(() => {
+                    card.classList.remove('flip');
 
-            }, 5000); // Révélation pendant 5 secondes
-        });
+                }, 5000); // Révélation pendant 5 secondes
+            });
         }
 
 
@@ -297,10 +306,10 @@
     </script>
 
     <!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
-            </body>
-            
-            </html>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

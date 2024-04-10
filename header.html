@@ -1,28 +1,84 @@
 
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-    <div class="container">
-      <a class="navbar-brand nav-link" href="index.html">
-        <span style="font-family: Brush Script MT, Brush Script Std, cursive; font-size: 30px;">Frédéric Tessier</span>
-      </a>
-      <a href="profil.html"><i id="human-icon" class="fa fa-user w3-white" style="font-size: 30px;"></i> <!-- Déplacer l'icône ici --></a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: URW Chancery L, cursive; height: 40px;">Menu</a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="index.html">Home</a></li>
-              <li><a class="dropdown-item " href="jeux.html">Jeux</a></li>
-              <!-- <li><a class="dropdown-item " href="jeux2.html">Jeux2</a></li> -->
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="profil.html">Curriculum Vitae</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <div class="container">
+    <a class="navbar-brand nav-link" href="index.html">
+      <span style="font-family:  'Courier New', Courier, monospace; font-size: 30px;">Frédéric Tessier</span>
+    </a>
+    <a href="profil.html"><i id="human-icon" class="fa fa-user w3-white" style="font-size: 30px;"></i>
+      <!-- Déplacer l'icône ici --></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="font-family: URW Chancery L, cursive; height: 40px;">Menu</a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="index.html">Home</a></li>
+            <li><a class="dropdown-item " href="jeux.html">Jeux</a></li>
+            <!-- <li><a class="dropdown-item " href="jeux2.html">Jeux2</a></li> -->
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="profil.html">Curriculum Vitae</a></li>
+
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+
+    <a id="lang-link" class="nav-link lang-link"  onclick="changeLanguage()">Français / English</a>
+  </div>
+</nav>
+<script>
+  // Fonction pour changer la langue et la couleur du lien
+  function changeLanguage() {
+    // Insérer ici le code pour changer la langue du site
+    // Par exemple, vous pouvez changer le contenu de la page en français ou en anglais
+    // ou rediriger l'utilisateur vers une version différente du site en fonction de sa sélection.
+    // C'est juste un exemple de fonction, vous devrez implémenter la logique de changement de langue en fonction de vos besoins.
+    //alert("Changer de langue");
+
+    // Changer la couleur des liens en fonction de la langue sélectionnée
+    var langLink = document.getElementById("lang-link");
+    var lang = langLink.innerText.trim();
+    if (lang === "Français") {
+      langLink.classList.add("lang-active");
+      langLink.style.color = "red";
+      langLink.innerText = "English";
+    } else if (lang === "English") {
+      langLink.classList.add("lang-active");
+      langLink.style.color = "greenyellow";
+      langLink.innerText = "Français";
+    }
+  }
+
+  // Fonction pour détecter la langue du navigateur
+  function detectLanguage() {
+    // Vérifier si la langue a déjà été sélectionnée
+
+    if (userLang == null) {
+      // Si la langue est déjà sélectionnée, ne pas détecter automatiquement la langue du navigateur
+      var userLang = navigator.language || navigator.userLanguage;
+    // Si la langue détectée est le français ou l'anglais, mettez à jour le lien en conséquence
+    if (userLang.startsWith("fr")) {
+      document.getElementById("lang-link").innerText = "Français";
+      document.getElementById("lang-link").classList.add("lang-active");
+      document.getElementById("lang-link").style.color = "blue";
+    } else if (userLang.startsWith("en")) {
+      document.getElementById("lang-link").innerText = "English";
+      document.getElementById("lang-link").classList.add("lang-active");
+      document.getElementById("lang-link").style.color = "red";
+    }
+    }
+    
+  }
+
+  // Appeler la fonction pour détecter la langue du navigateur au chargement de la page
+  detectLanguage();
+</script>
+
