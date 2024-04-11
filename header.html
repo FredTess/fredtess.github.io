@@ -36,49 +36,34 @@
 </nav>
 <script>
   // Fonction pour changer la langue et la couleur du lien
+  // Fonction pour changer la langue et la couleur du lien
   function changeLanguage() {
-    // Insérer ici le code pour changer la langue du site
-    // Par exemple, vous pouvez changer le contenu de la page en français ou en anglais
-    // ou rediriger l'utilisateur vers une version différente du site en fonction de sa sélection.
-    // C'est juste un exemple de fonction, vous devrez implémenter la logique de changement de langue en fonction de vos besoins.
-    //alert("Changer de langue");
-
-    // Changer la couleur des liens en fonction de la langue sélectionnée
     var langLink = document.getElementById("lang-link");
     var lang = langLink.innerText.trim();
-    if (lang === "Français") {
-      langLink.classList.add("lang-active");
-      langLink.style.color = "red";
-      langLink.innerText = "English";
-    } else if (lang === "English") {
-      langLink.classList.add("lang-active");
-      langLink.style.color = "greenyellow";
-      langLink.innerText = "Français";
-    }
-  }
-
-  // Fonction pour détecter la langue du navigateur
-  function detectLanguage() {
-    // Vérifier si la langue a déjà été sélectionnée
-
-    if (userLang == null) {
-      // Si la langue est déjà sélectionnée, ne pas détecter automatiquement la langue du navigateur
-      var userLang = navigator.language || navigator.userLanguage;
-    // Si la langue détectée est le français ou l'anglais, mettez à jour le lien en conséquence
-    if (userLang.startsWith("fr")) {
-      document.getElementById("lang-link").innerText = "Français";
-      document.getElementById("lang-link").classList.add("lang-active");
-      document.getElementById("lang-link").style.color = "greenyellow";
-    } else if (userLang.startsWith("en")) {
-      document.getElementById("lang-link").innerText = "English";
-      document.getElementById("lang-link").classList.add("lang-active");
-      document.getElementById("lang-link").style.color = "red";
-    }
-    }
     
+    // Changer la langue sélectionnée
+    var newLang = (lang === "Français") ? "English" : "Français";
+    langLink.innerText = newLang;
+
+    // Mettre à jour le style du lien en fonction de la langue sélectionnée
+    langLink.style.color = (newLang === "Français") ? "greenyellow" : "red";
+
+    // Stocker la langue sélectionnée dans le stockage local
+    localStorage.setItem("selectedLanguage", newLang);
+    language();
   }
 
-  // Appeler la fonction pour détecter la langue du navigateur au chargement de la page
-  detectLanguage();
+  // Fonction pour détecter et utiliser la langue sélectionnée au chargement de la page
+  function setStoredLanguage() {
+    var storedLang = localStorage.getItem("selectedLanguage");
+    if (storedLang) {
+      var langLink = document.getElementById("lang-link");
+      langLink.innerText = storedLang;
+      langLink.style.color = (storedLang === "Français") ? "greenyellow" : "red";
+    }
+  }
+
+  // Appeler la fonction pour utiliser la langue sélectionnée au chargement de la page
+  setStoredLanguage();
 </script>
 
