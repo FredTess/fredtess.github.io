@@ -45,7 +45,10 @@
         <div id="layoutSidenav">
             <header id="header"></header>
             <div id="layoutSidenav_content">
-                <div id="main"></div>
+                <div id="main" style="text-align: center;">
+                    <img src="assets/img/Site-en-construction.jpg" alt="Under Construction" style="width: auto; height: auto; margin-bottom: 20px;">
+                    
+                </div>
                 <div id="footer"></div>
             </div>
         </div>
@@ -57,11 +60,6 @@
                     }
                 });
     
-                $("#main").load("home.html", function (response, status, xhr) {
-                    if (status == "error") {
-                        console.log("Error loading main content: " + xhr.status + " " + xhr.statusText);
-                    }
-                });
     
                 $("#footer").load("footer.html", function () {
                     setStoredLanguage();

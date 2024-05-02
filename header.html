@@ -1,69 +1,60 @@
-
-<!-- Responsive navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-  <div class="container">
-    <a class="navbar-brand nav-link" href="index.html">
-      <span style="font-family:  'Courier New', Courier, monospace; font-size: 30px;">Frédéric Tessier</span>
-    </a>
-    <a href="profil.html"><i id="human-icon" class="fa fa-user w3-white" style="font-size: 30px;"></i>
-      <!-- Déplacer l'icône ici --></a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false" style="font-family: URW Chancery L, cursive; height: 40px;">Menu</a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="index.html">Home</a></li>
-            <li><a class="dropdown-item " href="jeux.html">Jeux</a></li>
-            <!-- <li><a class="dropdown-item " href="jeux2.html">Jeux2</a></li> -->
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" href="profil.html">Curriculum Vitae</a></li>
-
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <a id="lang-link" class="nav-link lang-link"  onclick="changeLanguage()">Français / English</a>
-  </div>
-</nav>
-<script>
-  // Fonction pour changer la langue et la couleur du lien
-  // Fonction pour changer la langue et la couleur du lien
-  function changeLanguage() {
-    var langLink = document.getElementById("lang-link");
-    var lang = langLink.innerText.trim();
-    
-    // Changer la langue sélectionnée
-    var newLang = (lang === "Français") ? "English" : "Français";
-    langLink.innerText = newLang;
-
-    // Mettre à jour le style du lien en fonction de la langue sélectionnée
-    langLink.style.color = (newLang === "Français") ? "greenyellow" : "red";
-
-    // Stocker la langue sélectionnée dans le stockage local
-    localStorage.setItem("selectedLanguage", newLang);
-    language();
-  }
-
-  // Fonction pour détecter et utiliser la langue sélectionnée au chargement de la page
-  function setStoredLanguage() {
-    var storedLang = localStorage.getItem("selectedLanguage");
-    if (storedLang) {
-      var langLink = document.getElementById("lang-link");
-      langLink.innerText = storedLang;
-      langLink.style.color = (storedLang === "Français") ? "greenyellow" : "red";
-    }
-  }
-
-  // Appeler la fonction pour utiliser la langue sélectionnée au chargement de la page
-  setStoredLanguage();
-</script>
-
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Accueil</div>
+                <a class="nav-link" href="index.html">
+                    <div class="sb-nav-link-icon"><i class="fas fa-handshake fa-2x"></i></div>
+                    Bienvenue
+                </a>
+                <div class="sb-sidenav-menu-heading">Climat et Environnement</div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="sb-nav-link-icon"><i class="fas fa-cloud-sun fa-2x"></i></div>
+                    Climat et environnement
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                            <div class="sb-nav-link-icon"><i class="fas fa-map"></i></div>
+                            Cartes
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="rain.html">Précipitations</a>
+                                <a class="nav-link" href="temperature.html">Temperature</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="nullschool.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-globe-americas"></i></div>
+                            earth.nullschool.net
+                        </a>
+                        <a class="nav-link" href="construction.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-globe-americas"></i></div>
+                            Population mondiale
+                        </a>
+                    </nav>
+                </div>
+                <div class="sb-sidenav-menu-heading">Extras</div>
+                <a class="nav-link" href="profil.html">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user fa-2x"></i></div>
+                    Profil
+                </a>
+                <a class="nav-link" href="jeux.html">
+                    <div class="sb-nav-link-icon"><i class="fas fa-gamepad fa-2x"></i>></i></div>
+                    Jeu de mémoire
+                </a>
+                
+                <a class="nav-link" href="construction.html">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table fa-2x"></i></div>
+                    Tables
+                </a>
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Merci</div>
+            Beaucoup
+        </div>
+    </nav>
+</div>

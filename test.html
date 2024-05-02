@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de ville</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recherche de ville</h1>
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Entrez le nom d'une ville">
+            <button onclick="searchCity()">Rechercher</button>
+        </div>
+        <div>
+            <select id="cityList" onchange="selectCity()">
+                <option value="">Sélectionnez une ville</option>
+            </select>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function searchCity() {
+            var city = document.getElementById("cityInput").value;
+            var url = `http://nominatim.openstreetmap.org/search?format=json&q=${city}&addressdetails=1&limit=10`;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var cityList = document.getElementById("cityList");
+                cityList.innerHTML = '<option value="">Sélectionnez une ville</option>';
+                if (data && data.length > 0) {
+                    data.forEach(cityData => {
+                        var cityName = cityData.display_name;
+                        var option = document.createElement("option");
+                        option.value = cityName;
+                        option.textContent = cityName;
+                        cityList.appendChild(option);
+                    });
+                } else {
+                    document.getElementById("result").innerHTML = "<p>Aucune ville trouvée.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la recherche de la ville :", error);
+                document.getElementById("result").innerHTML = "<p>Une erreur s'est produite lors de la recherche de la ville.</p>";
+            });
+        }
+
+        function selectCity() {
+            var selectedCity = document.getElementById("cityList").value;
+            if (selectedCity) {
+                document.getElementById("cityInput").value = selectedCity;
+                var city = document.getElementById("cityInput").value;
+                var url = `http://nominatim.openstreetmap.org/search?format=json&q=${city}&addressdetails=1&limit=1`;
+
+                fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        var cityData = data[0];
+                        var cityName = cityData.display_name;
+                        var latitude = cityData.lat;
+                        var longitude = cityData.lon;
+
+                        document.getElementById("result").innerHTML = `
+                            <h2>Résultats :</h2>
+                            <p>Nom de la ville : ${cityName}</p>
+                            <p>Latitude : ${latitude}</p>
+                            <p>Longitude : ${longitude}</p>
+                        `;
+                    } else {
+                        document.getElementById("result").innerHTML = "<p>Aucune ville trouvée.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la recherche de la ville :", error);
+                    document.getElementById("result").innerHTML = "<p>Une erreur s'est produite lors de la recherche de la ville.</p>";
+                });
+            }
+        }
+    </script>
+</body>
+</html>
